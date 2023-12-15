@@ -30,12 +30,13 @@ export type Task = {
   description: string
 }
 
-export type Item = {
+export type TrackedItem = {
   id: string
   userId: number
   taskId: string
   createdAt: number
-  spentTime: number
+  time: number
+  note: string
 }
 
 export type AuthState = {

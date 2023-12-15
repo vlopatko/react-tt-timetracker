@@ -1,4 +1,3 @@
-import { useAppDispatch } from '../lib/hooks'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -14,8 +13,7 @@ import {
   FormMessage,
 } from '../components/ui/form'
 import { Input } from '../components/ui/input'
-import { logIn } from '../redux/slices/auth'
-import { useAppSelector } from '../redux/store'
+import { AuthState } from '../lib/types'
 
 const formSchema = z.object({
   username: z
@@ -41,7 +39,6 @@ const formSchema = z.object({
 })
 
 export function LoginForm() {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,10 +55,16 @@ export function LoginForm() {
       password === 'testpassword123' && username === 'testuser'
 
     if (isCorrectUser) {
-      dispatch(logIn({ username: username }))
+      localStorage.setItem(
+        'userAuth',
+        JSON.stringify({
+          isAuth: true,
+          username: username,
+          uid: crypto.randomUUID(),
+        } as AuthState)
+      )
 
-      form.resetField('password')
-      form.resetField('username')
+      form.reset()
 
       navigate('/')
     } else {

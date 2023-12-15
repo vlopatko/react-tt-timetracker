@@ -7,7 +7,45 @@ interface InitialState {
   value: TasksState
 }
 
-const initialState = { value: [] as TasksState } as InitialState
+const initialState = {
+  value: [
+    {
+      id: crypto.randomUUID(),
+      name: 'first task',
+      createdAt: 1702569927492,
+      closedAt: null,
+      description: 'first task',
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'second task',
+      createdAt: 1702569827492,
+      closedAt: null,
+      description: 'second task',
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'third task',
+      createdAt: 1702568927492,
+      closedAt: 1702569227492,
+      description: 'third task',
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'fourth task',
+      createdAt: 1702567927492,
+      closedAt: 1702569925492,
+      description: 'fourth task',
+    },
+    {
+      id: crypto.randomUUID(),
+      name: 'fifth task',
+      createdAt: 1702564927492,
+      closedAt: 1702565927492,
+      description: 'fifth task',
+    },
+  ] as TasksState,
+} as InitialState
 
 export const tasks = createSlice({
   name: 'tasks',

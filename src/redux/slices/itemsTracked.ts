@@ -1,7 +1,7 @@
-import { Item } from '@/src/lib/types'
+import { TrackedItem } from '@/src/lib/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type ItemsState = Item[]
+type ItemsState = TrackedItem[]
 
 interface InitialState {
   value: ItemsState
@@ -13,7 +13,10 @@ export const items = createSlice({
   name: 'items',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<Omit<Item, 'id' | 'createdAt'>>) => {
+    addItem: (
+      state,
+      action: PayloadAction<Omit<TrackedItem, 'id' | 'createdAt'>>
+    ) => {
       return {
         value: [
           ...state.value,
@@ -25,21 +28,7 @@ export const items = createSlice({
         ],
       }
     },
-    editItem: (
-      state,
-      action: PayloadAction<Pick<Item, 'id' | 'spentTime'>>
-    ) => {
-      return {
-        value: state.value.map((item) => {
-          if (item.id === action.payload.id) {
-            return { ...item, spentTime: action.payload.spentTime }
-          } else {
-            return item
-          }
-        }),
-      }
-    },
-    removeItem: (state, action: PayloadAction<Pick<Item, 'id'>>) => {
+    removeItem: (state, action: PayloadAction<Pick<TrackedItem, 'id'>>) => {
       return {
         value: state.value.filter((user) => user.id !== action.payload.id),
       }
@@ -47,5 +36,5 @@ export const items = createSlice({
   },
 })
 
-export const { addItem, editItem, removeItem } = items.actions
+export const { addItem, removeItem } = items.actions
 export default items.reducer
